@@ -1,0 +1,3 @@
+cumul_alloc=312
+cumul_desalloc=0
+max_alloc=312

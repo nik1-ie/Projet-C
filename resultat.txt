@@ -1,0 +1,10 @@
+abc 3
+if 2
+s'ed 2
+s'a 2
+abcd 1
+else 1
+while 1
+hhhhhh 1
+eehhhhhh 1
+quation 1
