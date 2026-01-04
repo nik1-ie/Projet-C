@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "alloc.h"
+#include "algo1.h"
 #include "algo2.h"
 #include "options.h"
 
 int main(int argc, char *argv[]) {
+    
     InfoMem info = {0, 0, 0};
     Options opt;
     init_options(&opt);
@@ -53,15 +55,19 @@ int main(int argc, char *argv[]) {
     }
 
     Dico d;
-    init_dico(&d);
-
-    if (opt.nom_algo == NULL || comparer_mots(opt.nom_algo, "algo2") == 0) {
+    if (opt.nom_algo == NULL || comparer_mots(opt.nom_algo, "algo1") == 0) {
+        init_dico(&d);
+        for (; i < argc; i++) {
+            log_Mots(&d, argv[i], &info);
+        }
+    } else if (opt.nom_algo == NULL || comparer_mots(opt.nom_algo, "algo2") == 0) {
+        init_dico(&d);
         for (; i < argc; i++) {
             compter_fichier(argv[i], &d, &info);
         }
     } else {
         printf("Algorithme inconnu : %s\n", opt.nom_algo);
-        printf("Algorithmes disponibles :\n algo2 -> Liste triee");
+        printf("Algorithmes disponibles :\nalgo1 -> Liste non triee \nalgo2 -> Liste triee");
         liberer_dico(&d, &info);
     }
 
