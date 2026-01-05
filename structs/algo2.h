@@ -1,33 +1,29 @@
-#ifndef ALGO_TRIE_H
-#define ALGO_TRIE_H
+#ifndef ALGO_LISTE_H
+#define ALGO_LISTE_H
 
-#include <stddef.h>
+#include <stdio.h>
 #include "alloc.h"
+#include "outils.h"
 
-typedef struct {
+typedef struct cellule {
     char *mot;
-    int  nb_occ;
-} Mot;
+    int   nb_occ;
+    struct cellule *suivant;
+} Cellule;
 
 typedef struct {
-    Mot *tab;
-    size_t nb_mots;
-    size_t capacite;
-} Dico;
+    Cellule *tete;
+} Liste;
 
-void init_dico(Dico *d);
-int taille(char chaine[]); // TD5
-void copie(char dest[], char origine[]); // TD5
-int convertir_str_en_int(char *s); // TP2 (ASCII)
-void liberer_dico(Dico *d, InfoMem *infoMem);
-int assurer_capacite(Dico *d, InfoMem *infoMem); // TD6
+void init_liste(Liste *L);
+void liberer_liste(Liste *L, InfoMem *infoMem);
+Cellule *recherche(Liste *L, char *mot);
+int  ajouter_mot_liste(Liste *L, char *mot_lu, InfoMem *infoMem);
 
-int  comparer_mots(char *a, char *b); // TP2 (ASCII) et TD 5 (Chaines de caractères)
-int  ajouter_mot(Dico *d, char *mot_lu, InfoMem *infoMem); // TD 6
+void compter_fichier_liste(char *nom, Liste *L, InfoMem *infoMem);
 
-int  mot_complet(char c);  // TP2 (ASCII)
-void compter_fichier(char *nom, Dico *d, InfoMem *infoMem); // TP 7 (Fichiers et chaines de caractères)
+void trier_liste_decroissante(Liste *L);
 
-void trier_ordre_decroissant(Dico *d);
+int  compter_cellules(Liste *L);
 
 #endif

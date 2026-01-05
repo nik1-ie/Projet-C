@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "alloc.h"
+#include "outils.h"
+#include "options.h"
 #include "algo1.h"
 #include "algo2.h"
-#include "options.h"
 
 int main(int argc, char *argv[]) {
-    
     InfoMem info = {0, 0, 0};
     Options opt;
     init_options(&opt);
@@ -43,77 +44,139 @@ int main(int argc, char *argv[]) {
             i++;
         } else {
             printf("Option inconnue : %s\n", argv[i]);
+            i++;
         }
     }
 
     if (opt.afficher_aide) {
-        printf("./projet [-n int] [-a algo1|algo2|algo3] [--help] [-s fichierdesortie] [-l fichierdeperf] fichiers...\n");
+        printf("./projet [-n int] [-a algo1|algo2] [--help] "
+               "[-s fichierdesortie] [-l fichierdeperf] fichiers...\n");
+        return EXIT_SUCCESS;
     }
 
     if (i >= argc) {
         printf("Aucun fichier de donnees fourni.\n");
+        return EXIT_FAILURE;
     }
 
-    Dico d;
+
     if (opt.nom_algo == NULL || comparer_mots(opt.nom_algo, "algo1") == 0) {
-        init_dico(&d);
+        Dico D;
+        init_dico(&D);
+
         for (; i < argc; i++) {
-            log_Mots(&d, argv[i], &info);
+            compter_fichier_dico(argv[i], &D, &info);
         }
-    } else if (opt.nom_algo == NULL || comparer_mots(opt.nom_algo, "algo2") == 0) {
-        init_dico(&d);
+
+        trier_dico_decroissant(&D);
+
+        FILE *out = stdout;
+        if (opt.fichier_sortie != NULL) {
+            out = fopen(opt.fichier_sortie, "w");
+            if (!out) {
+                printf("Erreur lors de l'ouverture du fichier de sortie\n");
+                liberer_dico(&D, &info);
+                return EXIT_FAILURE;
+            }
+        }
+
+        int limite;
+        if (opt.nb_mots_a_afficher < 0) {
+            limite = (int)D.nb_mots;
+        } else {
+            limite = opt.nb_mots_a_afficher;
+        }
+
+        if (limite > (int)D.nb_mots){
+            limite = (int)D.nb_mots;
+        }
+
+        for (int i = 0; i < limite; i++) {
+            fprintf(out, "%s %d\n", D.tab[i].mot, D.tab[i].nb_occ);
+        }
+
+        if (out != stdout) {
+            fclose(out);
+        }
+
+        if (opt.fichier_perf != NULL) {
+            FILE *pf = fopen(opt.fichier_perf, "w");
+            if (!pf) {
+                printf("Erreur lors de l'ouverture du fichier de performances\n");
+            } else {
+                fprintf(pf, "cumul_alloc=%zu\n", info.cumul_alloc);
+                fprintf(pf, "cumul_desalloc=%zu\n", info.cumul_desalloc);
+                fprintf(pf, "max_alloc=%zu\n", info.max_alloc);
+                fclose(pf);
+            }
+        }
+
+        liberer_dico(&D, &info);
+
+    } else if (comparer_mots(opt.nom_algo, "algo2") == 0) {
+        Liste L;
+        init_liste(&L);
+
         for (; i < argc; i++) {
-            compter_fichier(argv[i], &d, &info);
+            compter_fichier_liste(argv[i], &L, &info);
         }
+
+        trier_liste_decroissante(&L);
+
+        FILE *out = stdout;
+        if (opt.fichier_sortie != NULL) {
+            out = fopen(opt.fichier_sortie, "w");
+            if (!out) {
+                printf("Erreur lors de l'ouverture du fichier de sortie\n");
+                liberer_liste(&L, &info);
+                return EXIT_FAILURE;
+            }
+        }
+
+        int nb_mots = compter_cellules(&L);
+
+        int limite;
+        if (opt.nb_mots_a_afficher < 0) {
+            limite = nb_mots;
+        } else {
+            limite = opt.nb_mots_a_afficher;
+        }
+
+        if (limite > nb_mots) {
+            limite = nb_mots;
+        }
+
+        Cellule *courant = L.tete;
+        int k = 0;
+        while (courant != NULL && k < limite) {
+            fprintf(out, "%s %d\n", courant->mot, courant->nb_occ);
+            courant = courant->suivant;
+            k++;
+        }
+
+        if (out != stdout) {
+            fclose(out);
+        }
+
+        if (opt.fichier_perf != NULL) {
+            FILE *pf = fopen(opt.fichier_perf, "w");
+            if (!pf) {
+                printf("Erreur lors de l'ouverture du fichier de performances\n");
+            } else {
+                fprintf(pf, "cumul_alloc=%zu\n", info.cumul_alloc);
+                fprintf(pf, "cumul_desalloc=%zu\n", info.cumul_desalloc);
+                fprintf(pf, "max_alloc=%zu\n", info.max_alloc);
+                fclose(pf);
+            }
+        }
+
+        liberer_liste(&L, &info);
+
     } else {
         printf("Algorithme inconnu : %s\n", opt.nom_algo);
-        printf("Algorithmes disponibles :\nalgo1 -> Liste non triee \nalgo2 -> Liste triee");
-        liberer_dico(&d, &info);
+        printf("Algorithmes disponibles :\n algo1, algo2");
+        return EXIT_FAILURE;
     }
 
-    trier_ordre_decroissant(&d);
-
-    FILE *out = stdout;
-    if (opt.fichier_sortie != NULL) {
-        out = fopen(opt.fichier_sortie, "w");
-        if (!out) {
-            printf("Erreur lors de l'ouverture du fichier de sortie\n");
-            liberer_dico(&d, &info);
-        }
-    }
-
-    int limite;
-    if (opt.nb_mots_a_afficher < 0) {
-        limite = (int)d.nb_mots;
-    } else {
-        limite = opt.nb_mots_a_afficher;
-    }
-
-    if (limite > (int)d.nb_mots){
-        limite = (int)d.nb_mots;
-    }
-
-    for (int i = 0; i < limite; i++) {
-        fprintf(out, "%s %d\n", d.tab[i].mot, d.tab[i].nb_occ);
-    }
-
-    if (out != stdout) {
-        fclose(out);
-    }
-
-    if (opt.fichier_perf != NULL) {
-        FILE *pf = fopen(opt.fichier_perf, "w");
-        if (!pf) {
-            printf("Erreur lors de l'ouverture du fichier de performances\n");
-        } else {
-            fprintf(pf, "cumul_alloc=%zu\n", info.cumul_alloc);
-            fprintf(pf, "cumul_desalloc=%zu\n", info.cumul_desalloc);
-            fprintf(pf, "max_alloc=%zu\n", info.max_alloc);
-            fclose(pf);
-        }
-    }
-
-    liberer_dico(&d, &info);
-
-    return 0;
+    return EXIT_SUCCESS;
 }
