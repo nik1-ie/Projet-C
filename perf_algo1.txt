@@ -1,0 +1,4 @@
+cumul_alloc=624642
+cumul_desalloc=257792
+max_alloc=366850
+temps_execution=3

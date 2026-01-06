@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
                 fprintf(pf, "cumul_alloc=%zu\n", info.cumul_alloc);
                 fprintf(pf, "cumul_desalloc=%zu\n", info.cumul_desalloc);
                 fprintf(pf, "max_alloc=%zu\n", info.max_alloc);
-                fprintf(pf, "temps d'exécution=%d\n", fin);
+                fprintf(pf, "temps_execution=%d\n", fin);
                 fclose(pf);
             }
         }
@@ -176,7 +176,7 @@ int main(int argc, char *argv[]) {
                 fprintf(pf, "cumul_alloc=%zu\n", info.cumul_alloc);
                 fprintf(pf, "cumul_desalloc=%zu\n", info.cumul_desalloc);
                 fprintf(pf, "max_alloc=%zu\n", info.max_alloc);
-                fprintf(pf, "temps d'exécution=%d\n", fin);
+                fprintf(pf, "temps_execution=%d\n", fin);
                 fclose(pf);
             }
         }
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
             if (taille(resultats->mot) >= opt.min_longueur){ 
                 fprintf(out, "Mot n°%d - ", parcours);
                 fprintf(out, "%s %d\n", resultats->mot, resultats->occ);
-                printf("Mot n°%d : %s %d\n", parcours, resultats->mot, resultats->occ);
+                // printf("Mot n°%d : %s %d\n", parcours, resultats->mot, resultats->occ);
                 parcours++;
             }
             resultats = resultats->suivant;
@@ -238,7 +238,7 @@ int main(int argc, char *argv[]) {
                 fprintf(pf, "cumul_alloc=%zu\n", info.cumul_alloc);
                 fprintf(pf, "cumul_desalloc=%zu\n", info.cumul_desalloc);
                 fprintf(pf, "max_alloc=%zu\n", info.max_alloc);
-                fprintf(pf, "temps d'exécution=%d\n", fin);
+                fprintf(pf, "temps_execution=%d\n", fin);
                 fclose(pf);
             }
         }
