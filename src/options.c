@@ -6,4 +6,5 @@ void init_options(Options *opt) {
     opt->fichier_sortie = NULL;
     opt->fichier_perf = NULL;
     opt->afficher_aide = 0;
+    opt->min_longueur = 2;
 }

@@ -30,11 +30,17 @@ int assurer_capacite(Dico *d, InfoMem *infoMem) { // TD6
         if (nv == NULL) return 0;
         d->tab = nv;
         d->capacite = nouvelle_cap;
+        // printf("assurer_capacite : nb_mots=%d capacite=%d -> nouvelle_cap=%d (old_size=%d, new_size=%d)\n", 
+        //     d->nb_mots, d->capacite, nouvelle_cap, old_size, new_size);
     }
     return 1;
 }
 
-int ajouter_mot_dico(Dico *d, char *mot_lu, InfoMem *infoMem) { // TD 6
+int ajouter_mot_dico(Dico *d, char *mot_lu, InfoMem *infoMem, int min_longueur) {
+    if (taille(mot_lu) < min_longueur) {
+        return 1;
+    }
+
     for (int i = 0; i < d->nb_mots; i++) {
         if (comparer_mots(mot_lu, d->tab[i].mot) == 0) {
             d->tab[i].nb_occ++;
@@ -51,11 +57,13 @@ int ajouter_mot_dico(Dico *d, char *mot_lu, InfoMem *infoMem) { // TD 6
     copie(d->tab[d->nb_mots].mot, (char *)mot_lu);
     d->tab[d->nb_mots].nb_occ = 1;
     d->nb_mots++;
+    // printf("ajouter_mot_dico : mot='%s' len=%d\n", mot_lu, len);
 
     return 1;
 }
 
-void compter_fichier_dico(char *nom, Dico *d, InfoMem *infoMem) { // TP 7 (Fichiers et chaines de caractères)
+
+void compter_fichier_dico(char *nom, Dico *d, InfoMem *infoMem, int min_longueur) {
     FILE *f = fopen(nom, "r");
     if (f) {
         char mot_courant[256];
@@ -68,14 +76,14 @@ void compter_fichier_dico(char *nom, Dico *d, InfoMem *infoMem) { // TP 7 (Fichi
             } else {
                 if (i > 0) {
                     mot_courant[i] = '\0';
-                    ajouter_mot_dico(d, mot_courant, infoMem);
+                    ajouter_mot_dico(d, mot_courant, infoMem, min_longueur);
                     i = 0;
                 }
             }
         }
         if (i > 0) {
             mot_courant[i] = '\0';
-            ajouter_mot_dico(d, mot_courant, infoMem);
+            ajouter_mot_dico(d, mot_courant, infoMem, min_longueur);
         }
 
         fclose(f);
@@ -83,6 +91,7 @@ void compter_fichier_dico(char *nom, Dico *d, InfoMem *infoMem) { // TP 7 (Fichi
         printf("Le fichier ne peut pas être lu.\n");
     }
 }
+
 
 
 void trier_dico_decroissant(Dico *d) { // TD 7

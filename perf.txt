@@ -1,3 +1,3 @@
-cumul_alloc=628256
-cumul_desalloc=261376
-max_alloc=366880
+cumul_alloc=95935
+cumul_desalloc=0
+max_alloc=95935

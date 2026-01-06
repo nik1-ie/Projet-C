@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     time_t graine = time(NULL);
     time_t debut, fin;
     debut = time(NULL);
-    InfoMem info = {0, 0, 0};
+    InfoMem info = (InfoMem){0, 0, 0};
     Options opt;
     init_options(&opt);
 
@@ -27,6 +27,12 @@ int main(int argc, char *argv[]) {
                 printf("Option -n attend un entier\n");
             }
             opt.nb_mots_a_afficher = convertir_str_en_int(argv[++i]);
+            i++;
+        } else if (comparer_mots(argv[i], "-k") == 0) {
+            if (i + 1 >= argc) {
+                printf("Option -k attend un entier\n");
+            }
+            opt.min_longueur = convertir_str_en_int(argv[++i]);
             i++;
         } else if (comparer_mots(argv[i], "-a") == 0) {
             if (i + 1 >= argc) {
@@ -53,7 +59,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (opt.afficher_aide) {
-        printf("./projet [-n int] [-a algo1|algo2] [--help] "
+        printf("./projet [-n int] [-k int] [-a algo1|algo2] [--help] "
                "[-s fichierdesortie] [-l fichierdeperf] fichiers...\n");
         return EXIT_SUCCESS;
     }
@@ -63,13 +69,12 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-
     if (opt.nom_algo == NULL || comparer_mots(opt.nom_algo, "algo1") == 0) {
         Dico D;
         init_dico(&D);
 
         for (; i < argc; i++) {
-            compter_fichier_dico(argv[i], &D, &info);
+            compter_fichier_dico(argv[i], &D, &info, opt.min_longueur);
         }
 
         trier_dico_decroissant(&D);
@@ -89,13 +94,12 @@ int main(int argc, char *argv[]) {
         } else {
             limite = opt.nb_mots_a_afficher;
         }
-
-        if (limite > (int)D.nb_mots){
+        if (limite > (int)D.nb_mots) {
             limite = (int)D.nb_mots;
         }
 
-        for (int i = 0; i < limite; i++) {
-            fprintf(out, "%s %d\n", D.tab[i].mot, D.tab[i].nb_occ);
+        for (int k = 0; k < limite; k++) {
+            fprintf(out, "%s %d\n", D.tab[k].mot, D.tab[k].nb_occ);
         }
 
         if (out != stdout) {
@@ -123,7 +127,7 @@ int main(int argc, char *argv[]) {
         init_liste(&L);
 
         for (; i < argc; i++) {
-            compter_fichier_liste(argv[i], &L, &info);
+            compter_fichier_liste(argv[i], &L, &info, opt.min_longueur);
         }
 
         trier_liste_decroissante(&L);
@@ -146,7 +150,6 @@ int main(int argc, char *argv[]) {
         } else {
             limite = opt.nb_mots_a_afficher;
         }
-
         if (limite > nb_mots) {
             limite = nb_mots;
         }
