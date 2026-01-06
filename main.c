@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
         }
 
         for (int k = 0; k < limite; k++) {
-            fprintf(out, "%s %d\n", D.tab[k].mot, D.tab[k].nb_occ);
+            fprintf(out, "Mot n°%d - %s  Nombre d'occurences : %d\n\n",k, D.tab[k].mot, D.tab[k].nb_occ);
         }
 
         if (out != stdout) {
@@ -157,7 +157,7 @@ int main(int argc, char *argv[]) {
         Cellule *courant = L.tete;
         int k = 0;
         while (courant != NULL && k < limite) {
-            fprintf(out, "%s %d\n", courant->mot, courant->nb_occ);
+            fprintf(out, "Mot n°%d - %s  Nombre d'occurences : %d\n\n", k,courant->mot, courant->nb_occ);
             courant = courant->suivant;
             k++;
         }
@@ -216,9 +216,7 @@ int main(int argc, char *argv[]) {
         int parcours = 0;
         while (resultats != NULL && parcours < limite){
             if (taille(resultats->mot) >= opt.min_longueur){ 
-                fprintf(out, "Mot n°%d - ", parcours);
-                fprintf(out, "%s %d\n", resultats->mot, resultats->occ);
-                // printf("Mot n°%d : %s %d\n", parcours, resultats->mot, resultats->occ);
+                fprintf(out, "Mot n°%d - %s  Nombre d'occurences : %d\n\n", parcours, resultats->mot, resultats->occ);
                 parcours++;
             }
             resultats = resultats->suivant;
