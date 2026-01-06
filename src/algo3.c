@@ -151,11 +151,3 @@ int traite_tout(FileAttente *f, InfoMem *info, char *file){
     }
     return 1;
 }
-
-// int pileToList(FileAttente *pile, Dico *dico){
-//     //fct convertissant la pile en liste de taille lim en prenant les plus grands (qui sont donc au début - la fct unstack le reste en m temps ?)
-//     Cell *current = pile->debut;
-//     while (current->suivant != NULL){
-
-//     }
-// }

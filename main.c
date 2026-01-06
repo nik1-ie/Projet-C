@@ -208,15 +208,20 @@ int main(int argc, char *argv[]) {
         } else {
             limite = opt.nb_mots_a_afficher;
         }
-
         if (limite > nb_mots) {
             limite = nb_mots;
         }
 
-        Cell *resultats = (Cell *)myMalloc(sizeof(Cell) * limite, &info);
-        for (int j = 0; j < limite; j++) {
-            fprintf(out, "%s %d\n", resultats[j].mot, resultats[j].occ);
-
+        Cell *resultats = fileatt.debut;
+        int parcours = 0;
+        while (resultats != NULL && parcours < limite){
+            if (taille(resultats->mot) >= opt.min_longueur){ 
+                fprintf(out, "Mot n°%d - ", parcours);
+                fprintf(out, "%s %d\n", resultats->mot, resultats->occ);
+                printf("Mot n°%d : %s %d\n", parcours, resultats->mot, resultats->occ);
+                parcours++;
+            }
+            resultats = resultats->suivant;
         }
 
         if (out != stdout) {

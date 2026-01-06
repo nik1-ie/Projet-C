@@ -11,7 +11,6 @@ typedef struct cellule4 {
     int occ;
     struct cellule4 *suivant;
 } Cell;
-
 typedef Cell *List;
 
 typedef struct {
@@ -24,5 +23,3 @@ void initFileAttente(FileAttente *f);
 int traite_tout(FileAttente *f, InfoMem *info, char *file);
 void liberer_pile(FileAttente *f, InfoMem *info);
 #endif
-
-//int stack(FileAttente *f, char *motAjout, InfoMem *info)
