@@ -32,6 +32,7 @@ int comparer_mots(char *a, char *b) {
     return (int)a[i] - (int)b[i];
 }
 
+// Vérifie si un caractère spécial (' ou -) fait partie d'un mot
 int mot_complet(char c) {
     if ((c >= 'A' && c <= 'Z') ||
         (c >= 'a' && c <= 'z') ||

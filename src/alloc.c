@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "alloc.h"
 
+//Fonction d'allocation mémoire avec suivi
 void *myMalloc(size_t s, InfoMem *infoMem) {
     void *ptr = malloc(s);
     if ( ptr == NULL){
@@ -15,6 +16,7 @@ void *myMalloc(size_t s, InfoMem *infoMem) {
     return ptr;
 }
 
+//Fonction de désallocation mémoire avec suivi
 void myFree(void *ptr, InfoMem *infoMem, size_t old_size) {
     if (ptr == NULL){
         fprintf(stderr, "Erreur d'allocation memoire \n");
@@ -25,6 +27,7 @@ void myFree(void *ptr, InfoMem *infoMem, size_t old_size) {
     free(ptr);
 }
 
+//Fonction de réallocation mémoire avec suivi
 void *myRealloc(void *ptr, size_t new_size, InfoMem *infoMem, size_t old_size) {
     if (ptr == NULL) {
         void *new_ptr = realloc(ptr, new_size);
@@ -45,7 +48,7 @@ void *myRealloc(void *ptr, size_t new_size, InfoMem *infoMem, size_t old_size) {
     } else{
         if (new_ptr == ptr) {
             // Realloc sans deplacement
-if (new_size > old_size) {
+    if (new_size > old_size) {
                 infoMem->cumul_alloc += (new_size - old_size);
             } else {
                 infoMem->cumul_desalloc += (old_size - new_size);
