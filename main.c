@@ -75,12 +75,14 @@ int main(int argc, char *argv[]) {
 
     lire_mots_interdits(&mi, &info);
 
+    int nb_mots_total = 0;
+
     if (opt.nom_algo == NULL || comparer_mots(opt.nom_algo, "algo1") == 0) {
         Dico D;
         init_dico(&D);
 
         for (; i < argc; i++) {
-            compter_fichier_dico(argv[i], &D, &info, opt.min_longueur, &mi);
+            compter_fichier_dico(argv[i], &D, &info, opt.min_longueur, &mi, &nb_mots_total);
         }
 
         trier_dico_decroissant(&D);
@@ -122,6 +124,8 @@ int main(int argc, char *argv[]) {
                 fprintf(pf, "cumul_desalloc=%zu\n", info.cumul_desalloc);
                 fprintf(pf, "max_alloc=%zu\n", info.max_alloc);
                 fprintf(pf, "temps_execution=%d\n", fin);
+                fprintf(pf, "nb_mots_total=%d\n", nb_mots_total);
+                fprintf(pf, "nb_mots_distincts=%d\n", D.nb_mots);
                 fclose(pf);
             }
         }else{
@@ -139,7 +143,7 @@ int main(int argc, char *argv[]) {
         init_liste(&L);
 
         for (; i < argc; i++) {
-            compter_fichier_liste(argv[i], &L, &info, opt.min_longueur, &mi);
+            compter_fichier_liste(argv[i], &L, &info, opt.min_longueur, &mi, &nb_mots_total);
         }
 
         trier_liste_decroissante(&L);
@@ -189,6 +193,8 @@ int main(int argc, char *argv[]) {
                 fprintf(pf, "cumul_desalloc=%zu\n", info.cumul_desalloc);
                 fprintf(pf, "max_alloc=%zu\n", info.max_alloc);
                 fprintf(pf, "temps_execution=%d\n", fin);
+                fprintf(pf, "nb_mots_total=%d\n", nb_mots_total);
+                fprintf(pf, "nb_mots_distincts=%d\n", compter_cellules(&L));
                 fclose(pf);
             }
         }else{
@@ -205,7 +211,7 @@ int main(int argc, char *argv[]) {
         FileAttente fileatt;
         initFileAttente(&fileatt);
         for (; i < argc; i++) {
-            traite_tout(&fileatt, &info, argv[i]);
+            traite_tout(&fileatt, &info, argv[i], &nb_mots_total);
         }
         
         FILE *out = stdout;
@@ -255,6 +261,8 @@ int main(int argc, char *argv[]) {
                 fprintf(pf, "cumul_desalloc=%zu\n", info.cumul_desalloc);
                 fprintf(pf, "max_alloc=%zu\n", info.max_alloc);
                 fprintf(pf, "temps_execution=%d\n", fin);
+                fprintf(pf, "nb_mots_total=%d\n", nb_mots_total);
+                fprintf(pf, "nb_mots_distincts=%d\n", fileatt.capacity);
                 fclose(pf);
             }
         }else{

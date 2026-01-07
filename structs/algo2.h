@@ -19,8 +19,8 @@ typedef struct {
 void init_liste(Liste *L);
 void liberer_liste(Liste *L, InfoMem *infoMem);
 Cellule *recherche(Liste *L, char *mot);
-int ajouter_mot_liste(Liste *L, char *mot_lu, InfoMem *infoMem, int min_longueur, MotInterdit *mi);
-void compter_fichier_liste(char *nom, Liste *L, InfoMem *infoMem, int min_longueur, MotInterdit *mi);
+int ajouter_mot_liste(Liste *L, char *mot_lu, InfoMem *infoMem, int min_longueur, MotInterdit *mi, int *nb_mots_total);
+void compter_fichier_liste(char *nom, Liste *L, InfoMem *infoMem, int min_longueur, MotInterdit *mi, int *nb_mots_total);
 
 void trier_liste_decroissante(Liste *L);
 

@@ -87,7 +87,11 @@ void orderPile(FileAttente *f){
 }
 
 // Fonction ajoutant un mot ou une occurence à la pile 
-int stack(FileAttente *f, char *motAjout, InfoMem *info){
+int stack(FileAttente *f, char *motAjout, InfoMem *info, int *nb_mots_total){
+    if (nb_mots_total != NULL) {
+        (*nb_mots_total)++;
+    }
+
     // Création d'une cellule pour le mot à ajouter
     Cell *nv = (Cell *)myMalloc(sizeof(Cell), info);
     if (nv==NULL) {
@@ -124,7 +128,7 @@ int stack(FileAttente *f, char *motAjout, InfoMem *info){
 }
 
 // Fonction traitant tout les mots d'un fichier texte.
-int traite_tout(FileAttente *f, InfoMem *info, char *file){
+int traite_tout(FileAttente *f, InfoMem *info, char *file, int *nb_mots_total){
     char c;
     char mot_entier[256];
     int i = 0;
@@ -138,14 +142,14 @@ int traite_tout(FileAttente *f, InfoMem *info, char *file){
             } else {
                 if (i > 0) {
                     mot_entier[i] = '\0';
-                    stack(f, mot_entier, info);
+                    stack(f, mot_entier, info, nb_mots_total);
                     i = 0;
                 }
             }
         }
         if (i > 0) {
             mot_entier[i] = '\0';
-            stack(f, mot_entier, info);
+            stack(f, mot_entier, info, nb_mots_total);
         }
         fclose(file_input);
     }
