@@ -57,37 +57,7 @@ Cell *presence(FileAttente *f, char *mot){
     return NULL;
 }
 
-// //Fonction arrangant les elts de pile selon l'occurance (debut = plus grand)
-// void orderPile(FileAttente *f){
-//     if (f->debut == NULL || f->debut->suivant == NULL) return; // Rien à trier
-//     int swapped;
-//     do {
-//         swapped = 0;
-//         Cell *current = f->debut;
-//         Cell *prev = NULL;
-//         while (current->suivant != NULL) {
-//             if (current->occ < current->suivant->occ) {
-//                 // Échanger les cellules
-//                 Cell *next = current->suivant;
-//                 current->suivant = next->suivant;
-//                 next->suivant = current;
-//                 if (prev == NULL) {
-//                     f->debut = next; // Mise à jour du début si nécessaire
-//                 } else {
-//                     prev->suivant = next;
-//                 }
-//                 prev = next;
-//                 swapped = 1;
-//             } else {
-//                 prev = current;
-//                 current = current->suivant;
-//             }
-//         }
-//         f->fin = current;
-//     } while (swapped);
-// }
-
-// Fonction OPTIMISÉE : déplace seulement le mot qui a augmenté d'occurrence
+//Fonction arrangant les elts de pile selon l'occurance (debut = plus grand)
 void orderPile(FileAttente *f, Cell *changed_cell){
     if (f->debut == NULL || f->debut->suivant == NULL) return;
     
