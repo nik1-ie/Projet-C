@@ -245,10 +245,6 @@ int main(int argc, char *argv[]) {
         Cell *resultats = fileatt.debut;
         int k = 0;
         while (resultats != NULL && k < limite){
-            if (est_mot_interdit(resultats->mot, &mi)){
-                    resultats = resultats->suivant;
-                    continue;
-                }
             if (taille(resultats->mot) >= opt.min_longueur){ 
                 
                 fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n", k+1, resultats->mot, resultats->occ);
