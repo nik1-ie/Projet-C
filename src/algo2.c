@@ -43,8 +43,12 @@ Cellule *recherche(Liste *L, char *mot) { // TD 7
     return NULL;
 }
 
-int ajouter_mot_liste(Liste *L, char *mot_lu, InfoMem *infoMem, int min_longueur) {
+int ajouter_mot_liste(Liste *L, char *mot_lu, InfoMem *infoMem, int min_longueur, MotInterdit *mi) {
     if (taille(mot_lu) < min_longueur) {
+        return 1;
+    }
+
+    if (mi != NULL && est_mot_interdit(mot_lu, mi)){
         return 1;
     }
 
@@ -74,7 +78,7 @@ int ajouter_mot_liste(Liste *L, char *mot_lu, InfoMem *infoMem, int min_longueur
 
 
 
-void compter_fichier_liste(char *nom, Liste *L, InfoMem *infoMem, int min_longueur) {
+void compter_fichier_liste(char *nom, Liste *L, InfoMem *infoMem, int min_longueur, MotInterdit *mi) {
     FILE *f = fopen(nom, "r");
     if (!f) {
         printf("Erreur ouverture fichier %s\n", nom);
@@ -91,14 +95,14 @@ void compter_fichier_liste(char *nom, Liste *L, InfoMem *infoMem, int min_longue
         } else {
             if (i > 0) {
                 mot_courant[i] = '\0';
-                ajouter_mot_liste(L, mot_courant, infoMem, min_longueur);
+                ajouter_mot_liste(L, mot_courant, infoMem, min_longueur, mi);
                 i = 0;
             }
         }
     }
     if (i > 0) {
         mot_courant[i] = '\0';
-        ajouter_mot_liste(L, mot_courant, infoMem, min_longueur);
+        ajouter_mot_liste(L, mot_courant, infoMem, min_longueur, mi);
     }
 
     fclose(f);

@@ -7,6 +7,7 @@
 #include "algo1.h"
 #include "algo2.h"
 #include "algo3.h"
+#include "mots_interdits.h"
 
 int main(int argc, char *argv[]) {
     time_t graine = time(NULL);
@@ -15,6 +16,9 @@ int main(int argc, char *argv[]) {
     InfoMem info = (InfoMem){0, 0, 0};
     Options opt;
     init_options(&opt);
+
+    MotInterdit mi;
+    init_mots_interdits(&mi);
 
     int i = 1;
 
@@ -69,12 +73,14 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
+    lire_mots_interdits(&mi, &info);
+
     if (opt.nom_algo == NULL || comparer_mots(opt.nom_algo, "algo1") == 0) {
         Dico D;
         init_dico(&D);
 
         for (; i < argc; i++) {
-            compter_fichier_dico(argv[i], &D, &info, opt.min_longueur);
+            compter_fichier_dico(argv[i], &D, &info, opt.min_longueur, &mi);
         }
 
         trier_dico_decroissant(&D);
@@ -99,7 +105,7 @@ int main(int argc, char *argv[]) {
         }
 
         for (int k = 0; k < limite; k++) {
-            fprintf(out, "Mot n°%d - %s  Nombre d'occurences : %d\n\n",k, D.tab[k].mot, D.tab[k].nb_occ);
+            fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n",k, D.tab[k].mot, D.tab[k].nb_occ);
         }
 
         if (out != stdout) {
@@ -127,7 +133,7 @@ int main(int argc, char *argv[]) {
         init_liste(&L);
 
         for (; i < argc; i++) {
-            compter_fichier_liste(argv[i], &L, &info, opt.min_longueur);
+            compter_fichier_liste(argv[i], &L, &info, opt.min_longueur, &mi);
         }
 
         trier_liste_decroissante(&L);
@@ -157,7 +163,7 @@ int main(int argc, char *argv[]) {
         Cellule *courant = L.tete;
         int k = 0;
         while (courant != NULL && k < limite) {
-            fprintf(out, "Mot n°%d - %s  Nombre d'occurences : %d\n\n", k,courant->mot, courant->nb_occ);
+            fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n", k,courant->mot, courant->nb_occ);
             courant = courant->suivant;
             k++;
         }
@@ -216,7 +222,7 @@ int main(int argc, char *argv[]) {
         int parcours = 0;
         while (resultats != NULL && parcours < limite){
             if (taille(resultats->mot) >= opt.min_longueur){ 
-                fprintf(out, "Mot n°%d - %s  Nombre d'occurences : %d\n\n", parcours, resultats->mot, resultats->occ);
+                fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n", parcours, resultats->mot, resultats->occ);
                 parcours++;
             }
             resultats = resultats->suivant;
@@ -249,5 +255,6 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
+    liberer_mots_interdits(&mi, &info);
     return EXIT_SUCCESS;
 }

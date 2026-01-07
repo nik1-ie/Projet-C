@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include "alloc.h"
 #include "outils.h"
+#include "mots_interdits.h"
 
 typedef struct {
     char *mot;
@@ -20,9 +21,9 @@ void init_dico(Dico *d);
 void liberer_dico(Dico *d, InfoMem *infoMem);
 int assurer_capacite(Dico *d, InfoMem *infoMem); // TD6
 
-int ajouter_mot_dico(Dico *d, char *mot_lu, InfoMem *infoMem, int min_longueur); // TD 6
+int ajouter_mot_dico(Dico *d, char *mot_lu, InfoMem *infoMem, int min_longueur, MotInterdit *mi); // TD 6
 
-void compter_fichier_dico(char *nom, Dico *d, InfoMem *infoMem, int min_longueur); // TP 7 (Fichiers et chaines de caractères)
+void compter_fichier_dico(char *nom, Dico *d, InfoMem *infoMem, int min_longueur, MotInterdit *mi); // TP 7 (Fichiers et chaines de caractères)
 
 void trier_dico_decroissant(Dico *d);
 

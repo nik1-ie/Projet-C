@@ -36,8 +36,12 @@ int assurer_capacite(Dico *d, InfoMem *infoMem) { // TD6
     return 1;
 }
 
-int ajouter_mot_dico(Dico *d, char *mot_lu, InfoMem *infoMem, int min_longueur) {
+int ajouter_mot_dico(Dico *d, char *mot_lu, InfoMem *infoMem, int min_longueur, MotInterdit *mi) {
     if (taille(mot_lu) < min_longueur) {
+        return 1;
+    }
+
+    if (mi != NULL && est_mot_interdit(mot_lu, mi)){
         return 1;
     }
 
@@ -63,7 +67,7 @@ int ajouter_mot_dico(Dico *d, char *mot_lu, InfoMem *infoMem, int min_longueur) 
 }
 
 
-void compter_fichier_dico(char *nom, Dico *d, InfoMem *infoMem, int min_longueur) {
+void compter_fichier_dico(char *nom, Dico *d, InfoMem *infoMem, int min_longueur, MotInterdit *mi) {
     FILE *f = fopen(nom, "r");
     if (f) {
         char mot_courant[256];
@@ -76,14 +80,14 @@ void compter_fichier_dico(char *nom, Dico *d, InfoMem *infoMem, int min_longueur
             } else {
                 if (i > 0) {
                     mot_courant[i] = '\0';
-                    ajouter_mot_dico(d, mot_courant, infoMem, min_longueur);
+                    ajouter_mot_dico(d, mot_courant, infoMem, min_longueur, mi);
                     i = 0;
                 }
             }
         }
         if (i > 0) {
             mot_courant[i] = '\0';
-            ajouter_mot_dico(d, mot_courant, infoMem, min_longueur);
+            ajouter_mot_dico(d, mot_courant, infoMem, min_longueur, mi);
         }
 
         fclose(f);
