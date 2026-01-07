@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
         }
 
         for (int k = 0; k < limite; k++) {
-            fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n",k, D.tab[k].mot, D.tab[k].nb_occ);
+            fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n",k+1 , D.tab[k].mot, D.tab[k].nb_occ);
         }
 
         if (out != stdout) {
@@ -124,6 +124,12 @@ int main(int argc, char *argv[]) {
                 fprintf(pf, "temps_execution=%d\n", fin);
                 fclose(pf);
             }
+        }else{
+            printf("\nPerformances de l'algorithme :\n");
+            printf("Allocation = %zu\n", info.cumul_alloc);
+            printf("Désallocation = %zu\n", info.cumul_desalloc);
+            printf("Allocation maximum = %zu\n", info.max_alloc);
+            printf("Temps d'exécution = %d\n", fin);
         }
 
         liberer_dico(&D, &info);
@@ -163,7 +169,7 @@ int main(int argc, char *argv[]) {
         Cellule *courant = L.tete;
         int k = 0;
         while (courant != NULL && k < limite) {
-            fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n", k,courant->mot, courant->nb_occ);
+            fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n", k+1 ,courant->mot, courant->nb_occ);
             courant = courant->suivant;
             k++;
         }
@@ -185,6 +191,12 @@ int main(int argc, char *argv[]) {
                 fprintf(pf, "temps_execution=%d\n", fin);
                 fclose(pf);
             }
+        }else{
+            printf("\nPerformances de l'algorithme :\n");
+            printf("Allocation = %zu\n", info.cumul_alloc);
+            printf("Désallocation = %zu\n", info.cumul_desalloc);
+            printf("Allocation maximum = %zu\n", info.max_alloc);
+            printf("Temps d'exécution = %d\n", fin);
         }
 
         liberer_liste(&L, &info);
@@ -219,11 +231,11 @@ int main(int argc, char *argv[]) {
         }
 
         Cell *resultats = fileatt.debut;
-        int parcours = 0;
-        while (resultats != NULL && parcours < limite){
+        int k = 0;
+        while (resultats != NULL && k < limite){
             if (taille(resultats->mot) >= opt.min_longueur){ 
-                fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n", parcours, resultats->mot, resultats->occ);
-                parcours++;
+                fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n", k+1, resultats->mot, resultats->occ);
+                k++;
             }
             resultats = resultats->suivant;
         }
@@ -245,6 +257,12 @@ int main(int argc, char *argv[]) {
                 fprintf(pf, "temps_execution=%d\n", fin);
                 fclose(pf);
             }
+        }else{
+            printf("\nPerformances de l'algorithme :\n");
+            printf("Allocation = %zu\n", info.cumul_alloc);
+            printf("Désallocation = %zu\n", info.cumul_desalloc);
+            printf("Allocation maximum = %zu\n", info.max_alloc);
+            printf("Temps d'exécution = %d\n", fin);
         }
         liberer_pile(&fileatt, &info);
 
