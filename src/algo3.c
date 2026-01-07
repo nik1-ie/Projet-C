@@ -179,7 +179,7 @@ int stack(FileAttente *f, char *motAjout, InfoMem *info, int min_longueur, MotIn
 }
 
 // Fonction traitant tout les mots d'un fichier texte.
-int traite_tout(FileAttente *f, InfoMem *info, char *file, int min_longueur, MotInterdit *mi, int *nb_mots_total, int minlongueur){
+int traite_tout(FileAttente *f, InfoMem *info, char *file, int min_longueur, MotInterdit *mi, int *nb_mots_total){
     char c;
     char mot_entier[256];
     int i = 0;
@@ -193,7 +193,7 @@ int traite_tout(FileAttente *f, InfoMem *info, char *file, int min_longueur, Mot
             } else {
                 if (i > 0) {
                     mot_entier[i] = '\0';
-                    if (taille(mot_entier) >= minlongueur) {
+                    if (taille(mot_entier) >= min_longueur) {
                         stack(f, mot_entier, info, min_longueur, mi, nb_mots_total);
                     }
                     i = 0;
@@ -202,7 +202,7 @@ int traite_tout(FileAttente *f, InfoMem *info, char *file, int min_longueur, Mot
         }
         if (i > 0) {
             mot_entier[i] = '\0';
-            if (taille(mot_entier) >= minlongueur) {
+            if (taille(mot_entier) >= min_longueur) {
                 stack(f, mot_entier, info, min_longueur, mi, nb_mots_total);
             }
         }
