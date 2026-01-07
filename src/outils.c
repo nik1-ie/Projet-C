@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include "outils.h"
 
 void copie(char dest[], char origine[]) {
@@ -34,7 +35,10 @@ int comparer_mots(char *a, char *b) {
 
 // Vérifie si un caractère spécial (' ou -) fait partie d'un mot
 int mot_complet(char c) {
-    if ((c >= 'A' && c <= 'Z') ||
+    unsigned char uc = (unsigned char)c;
+    if (isalpha(uc) || c == '-' || c == '\'') {
+        return 1;
+    }else if ((c >= 'A' && c <= 'Z') ||
         (c >= 'a' && c <= 'z') ||
         c == '-' ||
         c == '\'') {
