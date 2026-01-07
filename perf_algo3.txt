@@ -2,5 +2,5 @@ cumul_alloc=1881168
 cumul_desalloc=1489402
 max_alloc=391801
 temps_execution=8
-nb_mots_total=126188
+nb_mots_total=63094
 nb_mots_distincts=11961

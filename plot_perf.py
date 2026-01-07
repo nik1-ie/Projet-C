@@ -2,7 +2,7 @@ import sys
 import matplotlib.pyplot as plt
 
 if len(sys.argv) < 2:
-    print("Usage : python plot_perf_naif_multi_bar.py perf1.txt perf2.txt ...")
+    print("python plot_perf.py perf1.txt perf2.txt ...")
     sys.exit(1)
 
 fichiers = sys.argv[1:]

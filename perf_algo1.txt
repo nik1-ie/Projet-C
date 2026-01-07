@@ -1,6 +1,6 @@
-cumul_alloc=607314
-cumul_desalloc=257792
-max_alloc=349522
+cumul_alloc=628734
+cumul_desalloc=261888
+max_alloc=366846
 temps_execution=5
-nb_mots_total=73763
-nb_mots_distincts=10730
+nb_mots_total=63094
+nb_mots_distincts=11961
