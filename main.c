@@ -217,7 +217,7 @@ int main(int argc, char *argv[]) {
         FileAttente fileatt;
         initFileAttente(&fileatt);
         for (; i < argc; i++) {
-            traite_tout(&fileatt, &info, argv[i], &nb_mots_total);
+            traite_tout(&fileatt, &info, argv[i], &nb_mots_total, opt.min_longueur);
         }
         
         FILE *out = stdout;
@@ -245,7 +245,12 @@ int main(int argc, char *argv[]) {
         Cell *resultats = fileatt.debut;
         int k = 0;
         while (resultats != NULL && k < limite){
+            if (est_mot_interdit(resultats->mot, &mi)){
+                    resultats = resultats->suivant;
+                    continue;
+                }
             if (taille(resultats->mot) >= opt.min_longueur){ 
+                
                 fprintf(out, "Mot %d : '%s' - Nombre d'occurences : %d\n\n", k+1, resultats->mot, resultats->occ);
                 k++;
             }

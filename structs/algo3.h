@@ -20,6 +20,6 @@ typedef struct {
 } FileAttente;
 
 void initFileAttente(FileAttente *f);
-int traite_tout(FileAttente *f, InfoMem *info, char *file, int *nb_mots_total);
+int traite_tout(FileAttente *f, InfoMem *info, char *file, int *nb_mots_total, int min_longueur);
 void liberer_pile(FileAttente *f, InfoMem *info);
 #endif
