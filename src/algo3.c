@@ -108,10 +108,6 @@ int stack(FileAttente *f, char *motAjout, InfoMem *info, int min_longueur, MotIn
         return 1;
     }
 
-    if (nb_mots_total != NULL) {
-        (*nb_mots_total)++;
-    }
-    
     // Création d'une cellule pour le mot à ajouter
     Cell *nv = (Cell *)myMalloc(sizeof(Cell), info);
     if (nv==NULL) {
