@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <locale.h>
 #include "alloc.h"
 #include "outils.h"
 #include "options.h"
@@ -10,6 +11,7 @@
 #include "mots_interdits.h"
 
 int main(int argc, char *argv[]) {
+    setlocale(LC_CTYPE, "");
     time_t graine = time(NULL);
     time_t debut, fin;
     debut = time(NULL);
