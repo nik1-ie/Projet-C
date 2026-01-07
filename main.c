@@ -217,7 +217,7 @@ int main(int argc, char *argv[]) {
         FileAttente fileatt;
         initFileAttente(&fileatt);
         for (; i < argc; i++) {
-            traite_tout(&fileatt, &info, argv[i], &nb_mots_total);
+            traite_tout(&fileatt, &info, argv[i], opt.min_longueur, &mi, &nb_mots_total);
         }
         
         FILE *out = stdout;

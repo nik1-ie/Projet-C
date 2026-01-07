@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "alloc.h"
 #include "outils.h"
+#include "mots_interdits.h"
 
 typedef struct cellule4 {
     char *mot;
@@ -20,6 +21,6 @@ typedef struct {
 } FileAttente;
 
 void initFileAttente(FileAttente *f);
-int traite_tout(FileAttente *f, InfoMem *info, char *file, int *nb_mots_total);
+int traite_tout(FileAttente *f, InfoMem *info, char *file, int min_longueur, MotInterdit *mi, int *nb_mots_total);
 void liberer_pile(FileAttente *f, InfoMem *info);
 #endif
