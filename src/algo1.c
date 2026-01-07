@@ -23,7 +23,12 @@ void liberer_dico(Dico *d, InfoMem *infoMem) {
 
 int assurer_capacite(Dico *d, InfoMem *infoMem) { // TD6
     if (d->nb_mots >= d->capacite) {
-        int nouvelle_cap = (d->capacite == 0) ? 16 : d->capacite * 2;
+        int nouvelle_cap;
+        if (d->capacite == 0) {
+            nouvelle_cap = 16;
+        } else {
+            nouvelle_cap = d->capacite * 2;
+        }
         int old_size = d->capacite * sizeof(Mot);
         int new_size = nouvelle_cap * sizeof(Mot);
         Mot *nv = myRealloc(d->tab, new_size, infoMem, old_size);

@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
             printf("Allocation maximum = %zu\n", info.max_alloc);
             printf("Temps d'execution = %d\n", fin);
             printf("Mots total = %d\n", nb_mots_total);
-            printf("Mots distincts = %d\n", D.nb_mots);
+            printf("Mots distincts = %d\n", D.capacite);
         }
 
         liberer_dico(&D, &info);
