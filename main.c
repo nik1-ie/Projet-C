@@ -133,9 +133,11 @@ int main(int argc, char *argv[]) {
         }else{
             printf("\nPerformances de l'algorithme :\n");
             printf("Allocation = %zu\n", info.cumul_alloc);
-            printf("Désallocation = %zu\n", info.cumul_desalloc);
+            printf("Desallocation = %zu\n", info.cumul_desalloc);
             printf("Allocation maximum = %zu\n", info.max_alloc);
-            printf("Temps d'exécution = %d\n", fin);
+            printf("Temps d'execution = %d\n", fin);
+            printf("Mots total = %d\n", nb_mots_total);
+            printf("Mots distincts = %d\n", D.nb_mots);
         }
 
         liberer_dico(&D, &info);
@@ -202,9 +204,11 @@ int main(int argc, char *argv[]) {
         }else{
             printf("\nPerformances de l'algorithme :\n");
             printf("Allocation = %zu\n", info.cumul_alloc);
-            printf("Désallocation = %zu\n", info.cumul_desalloc);
+            printf("Desallocation = %zu\n", info.cumul_desalloc);
             printf("Allocation maximum = %zu\n", info.max_alloc);
-            printf("Temps d'exécution = %d\n", fin);
+            printf("Temps d'execution = %d\n", fin);
+            printf("Mots total = %d\n", nb_mots_total);
+            printf("Mots distincts = %d\n", compter_cellules(&L));
         }
 
         liberer_liste(&L, &info);
@@ -270,9 +274,11 @@ int main(int argc, char *argv[]) {
         }else{
             printf("\nPerformances de l'algorithme :\n");
             printf("Allocation = %zu\n", info.cumul_alloc);
-            printf("Désallocation = %zu\n", info.cumul_desalloc);
+            printf("Desallocation = %zu\n", info.cumul_desalloc);
             printf("Allocation maximum = %zu\n", info.max_alloc);
-            printf("Temps d'exécution = %d\n", fin);
+            printf("Temps d'execution = %d\n", fin);
+            printf("Mots total = %d\n", nb_mots_total);
+            printf("Mots distincts = %d\n", fileatt.capacity);
         }
         liberer_pile(&fileatt, &info);
 
