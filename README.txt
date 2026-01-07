@@ -18,7 +18,7 @@ Vous pourrez donc exécuter, par example :
 `./projet -n 10 -k 10 -a algo1|algo2|algo3 -s fichier -l fichier textes`
 
 Ou alors, avec les fichiers fournis dans notre archive de fichier:
-`./projet -n 10 -k 10 -a algo1 -s resultat.txt -l perf.txt textes\test_repetitions.txt textes\les-fleurs-du-mal.txt`
+`./projet -n 10 -k 10 -a algo1 -s resultat.txt -l perf.txt textes\es-fleurs-du-mal.txt textes\les-fleurs-du-mal.txt`
 
 Le programme lancé, vous aurez le choix d'entrer un nombre illimités de mots à exclure du calcul du nombre d'occurences. 
 Lorsqu'il vous sera demandé, entrez ces mots, ent tapant sur la touche Entrer entre chaques, et finissez par `\fin`.
