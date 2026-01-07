@@ -3,4 +3,4 @@ cumul_desalloc=257280
 max_alloc=366824
 temps_execution=5
 nb_mots_total=62584
-nb_mots_distincts11955
+nb_mots_distincts=11955

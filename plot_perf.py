@@ -8,16 +8,17 @@ if len(sys.argv) < 2:
 fichiers = sys.argv[1:]
 
 noms = ["cumul_alloc", "cumul_desalloc", "max_alloc", "temps_execution"]
-n_metrics = len(noms)
+nb_noms = len(noms)
 n_files = len(fichiers)
 
-width = 0.8 / n_metrics
+width = 0.8 / nb_noms
 x = range(n_files) 
 
 temps_exec_reel = []
+infos_textes = []
 
 valeurs_par_fichier = []
-for fichier in fichiers:
+for i, fichier in enumerate(fichiers):
     with open(fichier, "r", encoding="utf-8") as f:
         lignes = f.readlines()
 
@@ -25,6 +26,8 @@ for fichier in fichiers:
     cd = int(lignes[1][15:])
     ma = int(lignes[2][10:])
     te = int(lignes[3][16:])
+    nbt = int(lignes[4][14:])
+    nbd = int(lignes[5][18:])
 
     temps_exec_reel.append(te)
 
@@ -32,9 +35,13 @@ for fichier in fichiers:
 
     valeurs_par_fichier.append([ca, cd, ma, nv_te])
 
-for j in range(n_metrics):
+    infos_textes.append(
+        f"f{i+1} : total={nbt}, distincts={nbd}"
+    )
+
+for j in range(nb_noms):
     valeurs = [valeurs_par_fichier[i][j] for i in range(n_files)]
-    decalage = (j - (n_metrics - 1) / 2) * width
+    decalage = (j - (nb_noms - 1) / 2) * width
     positions = [xi + decalage for xi in x]
 
     bars = plt.bar(positions, valeurs, width=width, label=noms[j])
@@ -53,7 +60,11 @@ for j in range(n_metrics):
                 fontsize=8,
             )
 
+
+leg1 = plt.legend(loc="upper left")
+plt.legend(infos_textes, title="Mots", loc="center left", handlelength=0)
+plt.gca().add_artist(leg1)
+
 plt.title("Performances")
-plt.legend()
 plt.grid(axis="y", linestyle="--", alpha=0.3)
 plt.show()
