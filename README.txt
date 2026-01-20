@@ -2,6 +2,7 @@
 Par Stephany Santos Ferreira de Sousa et Niekita Joseph
 
 
+# Manuel utilisateur
 Afin de compiler le projet, il vous suffit d'exécuter :
 `gcc -Istructs main.c src\alloc.c src\outils.c src\algo1.c src\algo2.c src\algo3.c src\options.c src\mots_interdits.c -o projet`
 
@@ -26,3 +27,7 @@ Lorsqu'il vous sera demandé, entrez ces mots, ent tapant sur la touche Entrer e
 
 Afin d'exécuter le fichier de performances, il suffit de taper :
 `python3 plot_perf.py input\perf_algo1.txt input\perf_algo2.txt input\perf_algo3.txt`
+
+# Rapport de projet 
+Explique le projet, son contenu et ses algorithmes, ainsi que l'étude comparative des différents algorithmes.
+[!Rapport de projet](rapport.pdf)
