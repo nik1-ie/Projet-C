@@ -30,4 +30,4 @@ Afin d'exécuter le fichier de performances, il suffit de taper :
 
 # Rapport de projet 
 Explique le projet, son contenu et ses algorithmes, ainsi que l'étude comparative des différents algorithmes.
-[!Rapport de projet](rapport.pdf)
+![rapport.png](rapport.png)
